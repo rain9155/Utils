@@ -1,12 +1,12 @@
-# RUtils
+# Utils
 [![](https://jitpack.io/v/rain9155/RUtils.svg)](https://jitpack.io/#rain9155/RUtils) 
 [![](license.png)](http://www.apache.org/licenses/LICENSE-2.0)
 ### Rain的工具库，一个简单实用工具库，功能还在继续完善！
 ### Features
 |工具|功能|
 |--|--|
-|[ActivityCollector](utilslibrary/src/main/java/com/example/utilslibrary/ActivityCollector.java)|活动管理器,随时随地退出活动|
-|[AnimUtil](utilslibrary/src/main/java/com/example/utilslibrary/AnimUtil.java)|View显示和隐藏动画|
+|[ActivityCollector](utils/src/main/java/com/example/utils/ActivityCollector.java)|活动管理器,随时随地退出活动|
+|[AnimUtil](utils/src/main/java/com/example/utils/AnimUtil.java)|View显示和隐藏动画|
 |[DisplayUtil](utilslibrary/src/main/java/com/example/utilslibrary/DisplayUtil.java)|屏幕相关工具类，如获取屏幕宽高|
 |[FileUtils](utilslibrary/src/main/java/com/example/utilslibrary/FileUtils.java)|文件存储相关工具类|
 |[HttpUnit](utilslibrary/src/main/java/com/example/utilslibrary/HttpUnit.java)|网络请求工具类,异步回调|
