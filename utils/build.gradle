@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+//添加下面两句
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
