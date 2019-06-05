@@ -3,7 +3,8 @@ package com.example.utils;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import com.example.utilslibrary.listener.HttpCallBackListener;
+
+import com.example.utils.listener.HttpCallBackListener;
 
 import java.io.BufferedReader;
 import java.io.IOException;

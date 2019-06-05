@@ -1,7 +1,4 @@
 apply plugin: 'com.android.library'
-//添加下面两句
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
 
 android {
     compileSdkVersion 28
@@ -24,5 +21,43 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.0.2'
+    compileOnly 'androidx.appcompat:appcompat:1.0.2'
 }
+
+apply plugin: 'com.novoda.bintray-release'
+
+//添加
+publish {
+    repoName = 'jianyu' //maven仓库名
+    userOrg = "rain9155" //bintray.com注册的用户名
+    groupId = "com.jianyu" //jcenter上的路径
+    artifactId = 'utils' //项目名称
+    publishVersion = "v1.0" //版本号
+    desc = "a simple utils tool" //描述，不重要，要填的话不要填中文，不然会乱码
+    website = "https://github.com/rain9155/Utils" ////网站，不重要，就填github上的地址就行了
+}
+
+
+
+//build.gradle 文末
+//bintray-config.gradle 就是跟 build.gradle 同层目录下的一个 gradle 文件，里面就是单纯将 exe {} 这块代码里的变量声明和赋值拷贝至 bintray-config.gradle 文件里
+//apply from: 'config.gradle'
+//apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
+//apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+//apply from: 'bintrayv1.gradle'
+//apply from: 'installv1.gradle'
+
+//javadoc {
+//    options{
+//        //如果你的项目里面有中文注释的话，必须将格式设置为UTF-8，不然会出现乱码
+//        encoding "UTF-8"
+//        charSet 'UTF-8'
+//        author true
+//        version true
+//        links "http://docs.oracle.com/javase/7/docs/api"
+//    }
+//}
+
+//tasks.getByPath(":utils:javadoc").enabled = false
+
+

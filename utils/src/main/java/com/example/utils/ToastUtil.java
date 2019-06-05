@@ -11,7 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.example.utilslibrary.anim.AnimatorListener;
+
+import com.example.utils.anim.AnimatorListener;
 
 /**
  * 提示微技巧

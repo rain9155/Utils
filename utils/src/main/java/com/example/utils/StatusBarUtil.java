@@ -1,7 +1,6 @@
 package com.example.utils;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -13,12 +12,13 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
+import androidx.annotation.FloatRange;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.regex.Pattern;
-
-import androidx.annotation.FloatRange;
-import androidx.annotation.RequiresApi;
 
 /**
  * 状态栏透明
@@ -33,15 +33,15 @@ public class StatusBarUtil {
     private static float DEFAULT_ALPHA = 0;
     private static final int MIN_API = 19;
 
-    public static void immersive(Activity activity) {
+    public static void immersive(AppCompatActivity activity) {
         immersive(activity, DEFAULT_COLOR, DEFAULT_ALPHA);
     }
 
-    public static void immersive(Activity activity, int color) {
+    public static void immersive(AppCompatActivity activity, int color) {
         immersive(activity.getWindow(), color, 1f);
     }
 
-    public static void immersive(Activity activity, int color, @FloatRange(from = 0.0, to = 1.0) float alpha) {
+    public static void immersive(AppCompatActivity activity, int color, @FloatRange(from = 0.0, to = 1.0) float alpha) {
         immersive(activity.getWindow(), color, alpha);
     }
 
@@ -71,7 +71,7 @@ public class StatusBarUtil {
     /**
      * 为活动中的Fragment的设置沉浸式状态栏
      */
-    public static void immersiveInFragments(Activity activity, int color, @FloatRange(from = 0.0, to = 1.0) float alpha) {
+    public static void immersiveInFragments(AppCompatActivity activity, int color, @FloatRange(from = 0.0, to = 1.0) float alpha) {
         if(Build.VERSION.SDK_INT < MIN_API) return;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -89,7 +89,7 @@ public class StatusBarUtil {
     /**
      * 为头部有照片的设置沉浸式状态栏
      */
-    public static void immersiveInImage(Activity activity) {
+    public static void immersiveInImage(AppCompatActivity activity) {
         if(Build.VERSION.SDK_INT < MIN_API) return;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -146,7 +146,7 @@ public class StatusBarUtil {
     /**
      * 设置状态栏darkMode,字体颜色及icon变黑(目前支持MIUI6以上,Flyme4以上,Android M以上)
      */
-    public static void darkMode(Activity activity, boolean dark) {
+    public static void darkMode(AppCompatActivity activity, boolean dark) {
         if (isFlyme4Later()) {
             darkModeForFlyme4(activity.getWindow(), dark);
         } else if (isMIUI6Later()) {
@@ -159,14 +159,14 @@ public class StatusBarUtil {
     /**
      * 设置状态栏darkMode,字体颜色及icon变黑(目前支持MIUI6以上,Flyme4以上,Android M以上)
      */
-    public static void darkMode(Activity activity) {
+    public static void darkMode(AppCompatActivity activity) {
         darkMode(activity.getWindow(), DEFAULT_COLOR, DEFAULT_ALPHA);
     }
 
     /**
      * 设置状态栏darkMode,字体颜色及icon变黑(目前支持MIUI6以上,Flyme4以上,Android M以上)
      */
-    public static void darkMode(Activity activity, int color, @FloatRange(from = 0.0, to = 1.0) float alpha) {
+    public static void darkMode(AppCompatActivity activity, int color, @FloatRange(from = 0.0, to = 1.0) float alpha) {
         darkMode(activity.getWindow(), color, alpha);
     }
 

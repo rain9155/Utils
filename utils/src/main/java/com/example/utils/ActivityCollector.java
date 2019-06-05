@@ -1,6 +1,6 @@
 package com.example.utils;
 
-import android.app.Activity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
@@ -11,19 +11,19 @@ import java.util.ArrayList;
 
 public class ActivityCollector {
 
-    public static ArrayList<Activity> activityArrayList = new ArrayList<>();
+    public static ArrayList<AppCompatActivity> activityArrayList = new ArrayList<>();
 
-    public static void addActivity(Activity activity){
+    public static void addActivity(AppCompatActivity activity){
         activityArrayList.add(activity);
     }
 
-    public static void removeActivity(Activity activity){
+    public static void removeActivity(AppCompatActivity activity){
         activityArrayList.remove(activity);
     }
 
 
     public static  void finishAll(){
-        for(Activity activity : activityArrayList){
+        for(AppCompatActivity activity : activityArrayList){
             if(!activity.isFinishing()){
                 activity.finish();
             }

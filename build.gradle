@@ -7,11 +7,15 @@ buildscript {
 
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.0'
-        //maven构建插件
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
-        //bintray上传插件
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
+        classpath 'com.android.tools.build:gradle:3.4.1'
+
+//        //maven构建插件, 用于将本地项目编译，打包成 aar，并生成所需的 pom.xml 等文件
+//        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
+//        //bintray上传插件，将上述生成的这些文件都上传至你的 bintray 仓库中去
+//        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
+
+        //bintary发布插件
+        classpath 'com.novoda:bintray-release:0.9.1'
     }
 }
 
