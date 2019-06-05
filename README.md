@@ -7,17 +7,17 @@
 |--|--|
 |[ActivityCollector](utils/src/main/java/com/example/utils/ActivityCollector.java)|活动管理器,随时随地退出活动|
 |[AnimUtil](utils/src/main/java/com/example/utils/AnimUtil.java)|View显示和隐藏动画|
-|[DisplayUtil](utilslibrary/src/main/java/com/example/utils/DisplayUtil.java)|屏幕相关工具类，如获取屏幕宽高|
-|[FileUtils](utilslibrary/src/main/java/com/example/utils/FileUtils.java)|文件存储相关工具类|
-|[HttpUnit](utilslibrary/src/main/java/com/example/utils/HttpUnit.java)|网络请求工具类,异步回调|
-|[ImageResizer](utilslibrary/src/main/java/com/example/utils/ImageResizer.java)|图片解析压缩相关工具类|
-|[KeyBoardUtil](utilslibrary/src/main/java/com/example/utils/KeyBoardUtil.java)|软键盘显示与隐藏工具类|
-|[NetWorkUtil](utilslibrary/src/main/java/com/example/utils/NetWorkUtil.java)|判断网络情况工具类|
-|[ShareUtil](utilslibrary/src/main/java/com/example/utils/ShareUtil.java)|分享工具类|
-|[StatusBarUtil](utilslibrary/src/main/java/com/example/utils/StatusBarUtil.java)|状态栏变色工具类|
-|[ToastUtil](utilslibrary/src/main/java/com/example/utils/ToastUtil.java)|Toast工具类|
-|[ServceUtil](utilslibrary/src/main/java/com/example/utils/ServiceUtil.java)|Servce工具类|
-|[TimeUtil](utilslibrary/src/main/java/com/example/utils/TimeUtil.java)|时间相关工具类|
+|[DisplayUtil](utils/src/main/java/com/example/utils/DisplayUtil.java)|屏幕相关工具类，如获取屏幕宽高|
+|[FileUtils](utils/src/main/java/com/example/utils/FileUtils.java)|文件存储相关工具类|
+|[HttpUnit](utils/src/main/java/com/example/utils/HttpUnit.java)|网络请求工具类,异步回调|
+|[ImageResizer](utils/src/main/java/com/example/utils/ImageResizer.java)|图片解析压缩相关工具类|
+|[KeyBoardUtil](utils/src/main/java/com/example/utils/KeyBoardUtil.java)|软键盘显示与隐藏工具类|
+|[NetWorkUtil](utils/src/main/java/com/example/utils/NetWorkUtil.java)|判断网络情况工具类|
+|[ShareUtil](utils/src/main/java/com/example/utils/ShareUtil.java)|分享工具类|
+|[StatusBarUtil](utils/src/main/java/com/example/utils/StatusBarUtil.java)|状态栏变色工具类|
+|[ToastUtil](utils/src/main/java/com/example/utils/ToastUtil.java)|Toast工具类|
+|[ServceUtil](utils/src/main/java/com/example/utils/ServiceUtil.java)|Servce工具类|
+|[TimeUtil](utils/src/main/java/com/example/utils/TimeUtil.java)|时间相关工具类|
 ### How to use?
 
 在Module目录下的build.gradle中添加依赖, 示例如下：
