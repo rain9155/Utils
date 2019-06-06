@@ -11,7 +11,9 @@ import android.widget.EditText;
 public class KeyBoardUtil {
 
     /**
-     * 打开软键盘
+     * 显示软键盘
+     * @param context 上下文
+     * @param editText 想要接受输入的editText
      */
     public static void openKeyBoard(Context context, EditText editText){
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -21,7 +23,9 @@ public class KeyBoardUtil {
     }
 
     /**
-     * 关闭软键盘
+     * 隐藏软键盘
+     * @param context 上下文
+     * @param editText 正在接受输入的editText
      */
     public static void closeKeyBoard(Context context, EditText editText) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);

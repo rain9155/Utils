@@ -2,6 +2,7 @@ package com.example.utils;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Point;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -18,7 +19,9 @@ public class DisplayUtil {
      */
     public static int getScreenWidth(Context context) {
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        return windowManager.getDefaultDisplay().getWidth();
+        Point point = new Point();
+        windowManager.getDefaultDisplay().getSize(point);
+        return point.x;
     }
 
     /**
@@ -27,7 +30,9 @@ public class DisplayUtil {
      */
     public static int getScreenHeight(Context context) {
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        return windowManager.getDefaultDisplay().getHeight();
+        Point point = new Point();
+        windowManager.getDefaultDisplay().getSize(point);
+        return point.y;
     }
 
     /**
