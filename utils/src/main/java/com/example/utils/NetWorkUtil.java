@@ -3,6 +3,7 @@ package com.example.utils;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
 
 /**
  * 网络工具
@@ -11,12 +12,20 @@ import android.net.NetworkInfo;
 public class NetWorkUtil {
 
     /**
+     * 检查WIFI是否打开
+     */
+    public static boolean isWifiEnable(Context context) {
+        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        return wifiManager != null && wifiManager.isWifiEnabled();
+    }
+
+    /**
      * 检查WIFI是否连接
      */
     public static boolean isWifiConnected(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo wifiInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        return wifiInfo != null;
+        return wifiInfo != null && wifiInfo.isConnected();
     }
     /**
      * 检查手机网络(4G/3G/2G)是否连接
@@ -24,7 +33,7 @@ public class NetWorkUtil {
     public static boolean isMobileNetworkConnected(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo mobileNetworkInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-        return mobileNetworkInfo != null;
+        return mobileNetworkInfo != null && mobileNetworkInfo.isConnected();
     }
 
     /**
