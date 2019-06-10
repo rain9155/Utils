@@ -32,7 +32,7 @@ publish {
     userOrg = "rain9155" //bintray.com注册的用户名
     groupId = "com.jianyu" //jcenter上的路径
     artifactId = 'utils' //项目名称
-    publishVersion = "v1.0" //版本号
+    publishVersion = "1.0.0" //版本号
     desc = "a simple utils tool" //描述，不重要，要填的话不要填中文，不然会乱码
     website = "https://github.com/rain9155/Utils" ////网站，不重要，就填github上的地址就行了
 }
