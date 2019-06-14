@@ -35,6 +35,20 @@ public class FileUtil {
     }
 
     /**
+     * 获得应用关联文件路径
+     */
+    public static String getFilePath(Context context, String name){
+        String filePath;
+        if (!"mounted".equals(Environment.getExternalStorageState()) && Environment.isExternalStorageRemovable()) {
+            filePath = context.getFilesDir().getPath();
+        } else {
+            filePath = context.getExternalFilesDir(null).getPath();
+        }
+
+        return filePath + File.separator + name;
+    }
+
+    /**
      * 反序列化对象到内存
      */
     public static Object restoreObject(Context context, String fileName) {
@@ -135,6 +149,16 @@ public class FileUtil {
             return true;
         }
         return false;
+    }
+
+
+    /**
+     * 关闭流对象
+     */
+    public static void close(Closeable... closeable) {
+        for(Closeable close : closeable){
+            close(close);
+        }
     }
 
     /**
