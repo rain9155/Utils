@@ -10,11 +10,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 /**
- * 一个图片压缩工具类
+ * 一个图片解析工具类
  * Create by 陈健宇 at 2018/8/23
  */
 public class ImageResizer {
-    private static final String TAG = "ImageResizer";
 
     /**
      * 从资源文件解析图片
@@ -95,14 +94,13 @@ public class ImageResizer {
      * @param reHeight 希望图片的高
      * @return 计算后的inSampleSize
      */
-    public static int calculateInSampleSize(BitmapFactory.Options options, int reWidth, int reHeight){
+    private static int calculateInSampleSize(BitmapFactory.Options options, int reWidth, int reHeight){
         if(reHeight == 0 || reHeight == 0){
             return 1;
         }
         //得到原始宽高
         final int originalWidth = options.outWidth;
         final int originalHeight = options.outHeight;
-        Log.d(TAG, "图片原始大小，originalWidth: " + originalWidth + " originalHeight: " + originalHeight);
         int inSampleSize = 1;//大于1图片才有缩放效果
         if(originalHeight > reHeight || originalWidth > reWidth){
             final int halfHeight = originalHeight / 2;
@@ -111,7 +109,6 @@ public class ImageResizer {
             while (halfWidth / inSampleSize >= reWidth && halfHeight / inSampleSize >= reHeight){
                 inSampleSize *= 2;
             }
-            Log.d(TAG, "计算后的inSampleSize：" + inSampleSize);
         }
         return inSampleSize;
     }

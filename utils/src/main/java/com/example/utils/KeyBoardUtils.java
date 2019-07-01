@@ -8,7 +8,7 @@ import android.widget.EditText;
  * 打开或关闭软键盘
  * Created by 陈健宇 at 2018/11/17
  */
-public class KeyBoardUtil {
+public class KeyBoardUtils {
 
     /**
      * 显示软键盘

@@ -16,7 +16,7 @@ import java.util.Map;
  * 多语言切换工具
  * Created by 陈健宇 at 2019/5/5
  */
-public class LanguageUtil {
+public class LanguageUtils {
 
     //跟随系统
     public static final String SYSTEM = "system";
