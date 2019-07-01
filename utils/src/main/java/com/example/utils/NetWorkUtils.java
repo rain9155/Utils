@@ -9,13 +9,13 @@ import android.net.wifi.WifiManager;
  * 网络工具
  * Created by 陈健宇 at 2018/11/27
  */
-public class NetWorkUtil {
+public class NetWorkUtils {
 
     /**
      * 检查WIFI是否打开
      */
     public static boolean isWifiEnable(Context context) {
-        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         return wifiManager != null && wifiManager.isWifiEnabled();
     }
 

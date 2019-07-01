@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * Created by asus on 2018/4/22.
  */
 
-public class HttpUnit {
+public class HttpUnits {
 
     /**
      *  发起网络请求
@@ -81,7 +81,7 @@ public class HttpUnit {
      * @param imageUrlList 图片合集的url
      * @return Bitmap数组
      */
-    public static ArrayList<Bitmap> getImageBitmap(ArrayList<String> imageUrlList){
+    public static ArrayList<Bitmap> getImages(ArrayList<String> imageUrlList){
         ArrayList<Bitmap> arrayImageList = new ArrayList<>();
         URL imgUrl = null;
         Bitmap bitmap = null;
@@ -114,7 +114,7 @@ public class HttpUnit {
      * @param imageUrl 图片的url
      * @return Bitmap
      */
-    public static Bitmap getOneImageBitmap(String imageUrl){
+    public static Bitmap getOneImage(String imageUrl){
         URL imgUrl = null;
         Bitmap bitmap = null;
         try {

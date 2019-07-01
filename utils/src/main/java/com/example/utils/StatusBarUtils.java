@@ -22,12 +22,11 @@ import java.util.regex.Pattern;
 
 /**
  * 状态栏透明
- * @author SCWANG
  * @date 2016/10/26
  */
 
 @SuppressWarnings("unused")
-public class StatusBarUtil {
+public class StatusBarUtils {
 
     private static int DEFAULT_COLOR = 0;
     private static float DEFAULT_ALPHA = 0;
@@ -189,15 +188,6 @@ public class StatusBarUtil {
         } else {
             immersive(window, color, alpha);
         }
-//        if (Build.VERSION.SDK_INT >= 21) {
-//            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//            window.setStatusBarColor(Color.TRANSPARENT);
-//        } else if (Build.VERSION.SDK_INT >= 19) {
-//            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//        }
-
-//        setTranslucentView((ViewGroup) window.getDecorView(), color, alpha);
     }
 
 
@@ -206,10 +196,6 @@ public class StatusBarUtil {
      */
     @RequiresApi(Build.VERSION_CODES.M)
     private static void darkModeForM(Window window, boolean dark) {
-//        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//        window.setStatusBarColor(Color.TRANSPARENT);
-
         int systemUiVisibility = window.getDecorView().getSystemUiVisibility();
         if (dark) {
             systemUiVisibility |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
@@ -296,8 +282,6 @@ public class StatusBarUtil {
             return false;
         }
     }
-    //</editor-fold>
-
 
     /**
      * 增加View的paddingTop,增加的值为状态栏高度
@@ -346,12 +330,6 @@ public class StatusBarUtil {
         }
     }
 
-
-    public static int mixtureColor(int color, @FloatRange(from = 0.0, to = 1.0) float alpha) {
-        int a = (color & 0xff000000) == 0 ? 0xff : color >>> 24;
-        return (color & 0x00ffffff) | (((int) (a * alpha)) << 24);
-    }
-
     /**
      * 获取状态栏高度
      */
@@ -366,4 +344,11 @@ public class StatusBarUtil {
         }
         return result;
     }
+
+
+    private static int mixtureColor(int color, @FloatRange(from = 0.0, to = 1.0) float alpha) {
+        int a = (color & 0xff000000) == 0 ? 0xff : color >>> 24;
+        return (color & 0x00ffffff) | (((int) (a * alpha)) << 24);
+    }
+
 }

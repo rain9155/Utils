@@ -12,13 +12,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.utils.anim.AnimatorListener;
+import com.example.utils.listener.AnimatorListener;
 
 /**
  * 提示微技巧
  * Created by 陈健宇 at 2018/10/27
  */
-public class ToastUtil {
+public class ToastUtils {
 
     private static Toast toast;
 

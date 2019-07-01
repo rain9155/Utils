@@ -11,7 +11,7 @@ import java.util.Locale;
  * 有关时间的工具方法
  * Created by 陈健宇 at 2018/12/6
  */
-public class TimeUtil {
+public class TimeUtils {
 
     /**
      * 获取当前时间

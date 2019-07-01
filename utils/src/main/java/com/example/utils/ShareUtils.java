@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
  * 分享工具
  * Created by codeest on 2016/8/22.
  */
-public class ShareUtil {
+public class ShareUtils {
 
     /**
      * 分享文字
@@ -26,7 +26,7 @@ public class ShareUtil {
             context.startActivity(Intent.createChooser(intent, title));
         }else {
             // 找不到指定的 Activity
-            ToastUtil.showToast(context, "找不到指定的应用来分享");
+            ToastUtils.showToast(context, "找不到指定的应用来分享");
         }
     }
 
@@ -39,7 +39,7 @@ public class ShareUtil {
             context.startActivity(Intent.createChooser(intent, title));
         }else {
             // 找不到指定的 Activity
-            ToastUtil.showToast(context, "找不到指定的应用来发送邮件");
+            ToastUtils.showToast(context, "找不到指定的应用来发送邮件");
         }
     }
 
@@ -55,7 +55,7 @@ public class ShareUtil {
             context.startActivity(Intent.createChooser(shareIntent, title));
         }else {
             // 找不到指定的 Activity
-            ToastUtil.showToast(context, "找不到指定的应用来分享");
+            ToastUtils.showToast(context, "找不到指定的应用来分享");
         }
     }
 
@@ -64,7 +64,7 @@ public class ShareUtil {
      */
     public static void openBrowser(Context context, String address){
         if (TextUtils.isEmpty(address) || address.startsWith("file://")) {
-            ToastUtil.showToast(context, "该链接无法使用浏览器打开");
+            ToastUtils.showToast(context, "该链接无法使用浏览器打开");
             return;
         }
         Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -72,7 +72,7 @@ public class ShareUtil {
         if(context.getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null){
             context.startActivity(intent);
         }else {
-            ToastUtil.showToast(context, "找不到指定应用打开浏览器");
+            ToastUtils.showToast(context, "找不到指定应用打开浏览器");
         }
     }
 }
