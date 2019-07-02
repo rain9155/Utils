@@ -19,6 +19,11 @@
 |[ToastUtil](utils/src/main/java/com/example/utils/ToastUtils.java)|Toast工具类|
 |[ServceUtil](utils/src/main/java/com/example/utils/ServiceUtils.java)|Servce工具类|
 |[TimeUtil](utils/src/main/java/com/example/utils/TimeUtils.java)|时间相关工具类|
+|[ImageUtils](utils/src/main/java/com/example/utils/ImageUtils.java)|图片处理工具类|
+|[LanguageUtils](utils/src/main/java/com/example/utils/LanguageUtils.java)|多语言切换工具类|
+|[IntentUtils]utils/src/main/java/com/example/utils/IntentUtils.java)|获取各种Intent工具类|
+|[VibrateUtils](utils/src/main/java/com/example/utils/VibrateUtils.java)|震动工具类，需添加VIBRATE权限|
+|[FileProvider7](utils/src/main/java/com/example/utils/FileProvider7.java)|适配器android7.0FileProvider的工具类|
 ### How to use?
 
 在Module目录下的build.gradle中添加依赖, 示例如下：
