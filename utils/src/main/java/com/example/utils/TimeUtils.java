@@ -15,7 +15,6 @@ public class TimeUtils {
 
     /**
      * 获取当前时间
-     * @return
      */
     public static String getNowTime(){
         @SuppressLint("SimpleDateFormat")

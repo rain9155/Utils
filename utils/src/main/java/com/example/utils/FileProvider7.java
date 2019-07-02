@@ -34,7 +34,7 @@ public class FileProvider7 {
     public static Uri getUriForFile24(Context context, File file) {
         Uri fileUri = FileProvider.getUriForFile(
                 context,
-                context.getPackageName() + ".fileprovider",
+                "com.example.utils.fileprovider",
                 file);
         return fileUri;
     }

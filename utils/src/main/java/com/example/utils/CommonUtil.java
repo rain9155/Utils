@@ -4,8 +4,6 @@ import android.annotation.TargetApi;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.graphics.Bitmap;
-import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import java.util.List;

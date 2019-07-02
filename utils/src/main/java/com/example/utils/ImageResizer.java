@@ -3,7 +3,6 @@ package com.example.utils;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 
 import java.io.FileDescriptor;
 import java.io.FileInputStream;

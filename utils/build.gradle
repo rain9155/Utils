@@ -3,7 +3,6 @@ apply plugin: 'com.android.library'
 android {
     compileSdkVersion 28
 
-
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 28
@@ -25,7 +24,6 @@ dependencies {
 }
 
 apply plugin: 'com.novoda.bintray-release'
-
 //添加
 publish {
     repoName = 'jianyu' //maven仓库名
