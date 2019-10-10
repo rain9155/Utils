@@ -11,7 +11,7 @@ import android.view.animation.LinearInterpolator;
  * 切换控件显隐性动画工具
  * Created by 陈健宇 at 2018/11/19
  */
-public class AnimUtil {
+public class AnimUtils {
 
     /**
      * 通过透明度显示控件

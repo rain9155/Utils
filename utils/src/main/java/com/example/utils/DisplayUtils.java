@@ -1,8 +1,10 @@
 package com.example.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Point;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -11,7 +13,7 @@ import android.view.WindowManager;
  * 一些屏幕相关的工具
  * Created by 陈健宇 at 2018/11/12
  */
-public class DisplayUtil {
+public class DisplayUtils {
 
     /**
      * 获取屏幕宽度
@@ -37,8 +39,6 @@ public class DisplayUtil {
 
     /**
      * 获取系统状态栏高度
-     * @param context
-     * @return
      */
     public static int getStatusBarHeight(Context context) {
         int statusBarHeight = 0;
@@ -48,6 +48,22 @@ public class DisplayUtil {
             statusBarHeight = res.getDimensionPixelSize(resourceId);
         }
         return statusBarHeight;
+    }
+
+    /**
+     * 获取底部导航区域的高度
+     */
+    public static int getSoftButtonsBarHeight(Activity activity) {
+        DisplayMetrics metrics = new DisplayMetrics();
+        activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int usableHeight = metrics.heightPixels;
+        activity.getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
+        int realHeight = metrics.heightPixels;
+        if (realHeight > usableHeight) {
+            return realHeight - usableHeight;
+        } else {
+            return 0;
+        }
     }
 
     /**
