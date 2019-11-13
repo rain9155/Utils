@@ -14,7 +14,7 @@ import java.io.File;
  * 需要在manifest文件中注册provider，如下：
  * <provider
  *      android:name="androidx.core.content.FileProvider"
- *      android:authorities="authoritie名（随便填）"
+ *      android:authorities="（随便填）"//这里填写provider的authoritie名
  *      android:exported="false"
  *      android:grantUriPermissions="true">
  *        <meta-data

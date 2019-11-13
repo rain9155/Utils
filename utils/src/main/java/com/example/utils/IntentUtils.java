@@ -12,6 +12,8 @@ import com.example.utils.config.MimeType;
  */
 public class IntentUtils {
 
+
+
     /**
      * 获得一个选择照片的Intent
      */
@@ -187,6 +189,6 @@ public class IntentUtils {
 
     private static Uri getUri(Context context, String path) {
         java.io.File file = new java.io.File(path);
-        return FileProvider7.getUriForFile(context, file);
+        return FileProvider7.getUriForFile(context, file, "com.example.utils");
     }
 }
