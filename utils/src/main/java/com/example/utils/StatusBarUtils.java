@@ -1,6 +1,7 @@
 package com.example.utils;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -12,181 +13,152 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
-import androidx.annotation.FloatRange;
+import androidx.annotation.ColorInt;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.ColorUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.regex.Pattern;
 
 /**
- * 状态栏透明
- * @date 2016/10/26
+ * 修改StatusBar颜色的工具类
+ * 参考：https://jimmysun.blog.csdn.net/article/details/100065336
+ * Created by 陈健宇 at 2019/11/10
  */
-
-@SuppressWarnings("unused")
 public class StatusBarUtils {
 
-    private static int DEFAULT_COLOR = 0;
-    private static float DEFAULT_ALPHA = 0;
     private static final int MIN_API = 19;
 
-    public static void immersive(AppCompatActivity activity) {
-        immersive(activity, DEFAULT_COLOR, DEFAULT_ALPHA);
-    }
-
-    public static void immersive(AppCompatActivity activity, int color) {
-        immersive(activity.getWindow(), color, 1f);
-    }
-
-    public static void immersive(AppCompatActivity activity, int color, @FloatRange(from = 0.0, to = 1.0) float alpha) {
-        immersive(activity.getWindow(), color, alpha);
-    }
-
-    public static void immersive(Window window) {
-        immersive(window, DEFAULT_COLOR, DEFAULT_ALPHA);
-    }
-
-    public static void immersive(Window window, int color) {
-        immersive(window, color, 1f);
+    public static void immersive(AppCompatActivity activity, @ColorInt int color) {
+        immersive(activity.getWindow(), color);
     }
 
     /**
-     * 设置沉浸式状态栏
+     * 设置状态栏颜色
      */
-    public static void immersive(Window window, int color, @FloatRange(from = 0.0, to = 1.0) float alpha) {
-
+    public static void immersive(Window window, @ColorInt int color) {
         if(Build.VERSION.SDK_INT < MIN_API) return;
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            setStatusColor(window, color, alpha);
+            setStatusColor(window, color);
         }else{
             window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            setTranslucentView((ViewGroup)window.getDecorView(), color, alpha);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            View decorView = window.getDecorView();
+            ViewGroup contentView = decorView.findViewById(android.R.id.content);
+            setPadding(window.getContext(), contentView);
+            setTranslucentView((ViewGroup) decorView, color);
         }
     }
 
-    /**
-     * 为活动中的Fragment的设置沉浸式状态栏
-     */
-    public static void immersiveInFragments(AppCompatActivity activity, int color, @FloatRange(from = 0.0, to = 1.0) float alpha) {
-        if(Build.VERSION.SDK_INT < MIN_API) return;
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            activity.getWindow().setStatusBarColor(color);
-            activity.getWindow().getDecorView()
-                    .setSystemUiVisibility(
-                            View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-        } else{
-            activity.getWindow()
-                    .setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            setTranslucentView((ViewGroup)activity.getWindow().getDecorView(), color, alpha);
-        }
-    }
-
-    /**
-     * 为头部有照片的设置沉浸式状态栏
-     */
-    public static void immersiveInImage(AppCompatActivity activity) {
-        if(Build.VERSION.SDK_INT < MIN_API) return;
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            activity.getWindow().setStatusBarColor(Color.TRANSPARENT);
-            activity.getWindow().getDecorView()
-                    .setSystemUiVisibility(
-                            View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-        } else{
-            View translucentView = activity.getWindow().getDecorView().findViewById(android.R.id.custom);
-            if(translucentView != null) translucentView.setVisibility(View.GONE);
-            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        }
-    }
-
-    /**
-     * 设置系统状态栏颜色
-     */
-    public static void setStatusColor(Window window, int color, @FloatRange(from = 0.0, to = 1.0) float alpha) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(mixtureColor(color, alpha));
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
-        }
-    }
-
-
-    /**
-     * 创建假的透明栏
-     */
-    public static void setTranslucentView(ViewGroup container, int color, @FloatRange(from = 0.0, to = 1.0) float alpha) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            int mixtureColor = mixtureColor(color, alpha);
-            View translucentView = container.findViewById(android.R.id.custom);
-            if (translucentView == null && mixtureColor != 0) {
-                translucentView = new View(container.getContext());
-                translucentView.setId(android.R.id.custom);
-                ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT, getStatusBarHeight(container.getContext()));
-                container.addView(translucentView, lp);
-            }
-            if (translucentView != null) {
-                translucentView.setBackgroundColor(mixtureColor);
-            }
-        }
-    }
-
-    public static void setStatusDarkColor(Window window) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        }
-    }
-
-    /**
-     * 设置状态栏darkMode,字体颜色及icon变黑(目前支持MIUI6以上,Flyme4以上,Android M以上)
-     */
-    public static void darkMode(AppCompatActivity activity, boolean dark) {
-        if (isFlyme4Later()) {
-            darkModeForFlyme4(activity.getWindow(), dark);
-        } else if (isMIUI6Later()) {
-            darkModeForMIUI6(activity.getWindow(), dark);
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            darkModeForM(activity.getWindow(), dark);
-        }
-    }
-
-    /**
-     * 设置状态栏darkMode,字体颜色及icon变黑(目前支持MIUI6以上,Flyme4以上,Android M以上)
-     */
-    public static void darkMode(AppCompatActivity activity) {
-        darkMode(activity.getWindow(), DEFAULT_COLOR, DEFAULT_ALPHA);
-    }
-
-    /**
-     * 设置状态栏darkMode,字体颜色及icon变黑(目前支持MIUI6以上,Flyme4以上,Android M以上)
-     */
-    public static void darkMode(AppCompatActivity activity, int color, @FloatRange(from = 0.0, to = 1.0) float alpha) {
-        darkMode(activity.getWindow(), color, alpha);
-    }
-
-    /**
-     * 设置状态栏darkMode,字体颜色及icon变黑(目前支持MIUI6以上,Flyme4以上,Android M以上)
-     */
-    public static void darkMode(Window window, int color, @FloatRange(from = 0.0, to = 1.0) float alpha) {
-        if (isFlyme4Later()) {
-            darkModeForFlyme4(window, true);
-            immersive(window,color,alpha);
-        } else if (isMIUI6Later()) {
-            darkModeForMIUI6(window, true);
-            immersive(window,color,alpha);
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+    public static void transparentAndDark(AppCompatActivity activity){
+        Window window = activity.getWindow();
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            transparent(window);
             darkModeForM(window, true);
-            immersive(window, color, alpha);
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        }else if(isFlyme4Later()){
+            transparent(window);
+            darkModeForFlyme4(window, true);
+        }else if(isMIUI6Later()){
+            transparent(window);
+            darkModeForMIUI6(window, true);
+        }else {
+            transparent(window);
+        }
+    }
+
+    /**
+     * 设置状态栏透明并且设置字体变暗
+     */
+    public static void transparentAndDark(Window window){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            transparent(window);
+            darkModeForM(window, true);
+        }else if(isFlyme4Later()){
+            transparent(window);
+            darkModeForFlyme4(window, true);
+        }else if(isMIUI6Later()){
+            transparent(window);
+            darkModeForMIUI6(window, true);
+        }else {
+            transparent(window);
+        }
+    }
+
+    /**
+     * 设置状态栏透明
+     */
+    public static void transparent(Window window){
+        if(Build.VERSION.SDK_INT < MIN_API) return;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setTransparent(window);
+        } else{
             window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            setTranslucentView((ViewGroup) window.getDecorView(), color, alpha);
-        } else {
-            immersive(window, color, alpha);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            View decorView = window.getDecorView();
+            ViewGroup contentView = decorView.findViewById(android.R.id.content);
+            contentView.setPadding(
+                    contentView.getPaddingLeft(),
+                    0,
+                    contentView.getPaddingRight(),
+                    contentView.getBottom()
+            );
+            View translucentView = window.getDecorView().findViewById(android.R.id.custom);
+            if(translucentView != null){
+                translucentView.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    public static void immersiveAndDark(AppCompatActivity activity, @ColorInt int color){
+        Window window = activity.getWindow();
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            immersive(window, color);
+            darkModeForM(window, true);
+        }else if(isFlyme4Later()){
+            immersive(window, color);
+            darkModeForFlyme4(window, true);
+        }else if(isMIUI6Later()){
+            immersive(window, color);
+            darkModeForMIUI6(window, true);
+        }else {
+            immersive(window, ColorUtils.blendARGB(Color.TRANSPARENT, color, 0.5f));
+        }
+    }
+
+    /**
+     * 设置状态栏颜色并且设置字体颜色变暗
+     */
+    public static void immersiveAndDark(Window window, @ColorInt int color){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            immersive(window, color);
+            darkModeForM(window, true);
+        }else if(isFlyme4Later()){
+            immersive(window, color);
+            darkModeForFlyme4(window, true);
+        }else if(isMIUI6Later()){
+            immersive(window, color);
+            darkModeForMIUI6(window, true);
+        }else {//6.0以下不能修改字体颜色，就把状态栏颜色降低一点，突出字体颜色
+            immersive(window, ColorUtils.blendARGB(Color.TRANSPARENT, color, 0.5f));
+        }
+    }
+
+    public static void darkMode(AppCompatActivity activity, boolean dark) {
+        darkMode(activity.getWindow(), dark);
+    }
+
+    /**
+     * 设置状态栏的字体颜色及icon变黑(目前支持MIUI6以上,Flyme4以上,Android M以上)
+     */
+    public static void darkMode(Window window, boolean isDark) {
+        if (isFlyme4Later()) {
+            darkModeForFlyme4(window, isDark);
+        } else if (isMIUI6Later()) {
+            darkModeForMIUI6(window, isDark);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            darkModeForM(window, isDark);
         }
     }
 
@@ -195,7 +167,7 @@ public class StatusBarUtils {
      * android 6.0设置字体颜色
      */
     @RequiresApi(Build.VERSION_CODES.M)
-    private static void darkModeForM(Window window, boolean dark) {
+    public static void darkModeForM(Window window, boolean dark) {
         int systemUiVisibility = window.getDecorView().getSystemUiVisibility();
         if (dark) {
             systemUiVisibility |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
@@ -257,30 +229,32 @@ public class StatusBarUtils {
         }
     }
 
-    /**
-     * 判断是否Flyme4以上
-     */
-    public static boolean isFlyme4Later() {
-        return Build.FINGERPRINT.contains("Flyme_OS_4")
-                || Build.VERSION.INCREMENTAL.contains("Flyme_OS_4")
-                || Pattern.compile("Flyme OS [4|5]", Pattern.CASE_INSENSITIVE).matcher(Build.DISPLAY).find();
-    }
 
     /**
-     * 判断是否为MIUI6以上
+     * 设置系统状态栏颜色(5.0以上)
      */
-    public static boolean isMIUI6Later() {
-        try {
-            @SuppressLint("PrivateApi")
-            Class<?> clz = Class.forName("android.os.SystemProperties");
-            Method mtd = clz.getMethod("get", String.class);
-            String val = (String) mtd.invoke(null, "ro.miui.ui.version.name");
-            val = val.replaceAll("[vV]", "");
-            int version = Integer.parseInt(val);
-            return version >= 6;
-        } catch (Exception e) {
-            return false;
-        }
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public static void setStatusColor(Window window,  @ColorInt int color) {
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+        window.setStatusBarColor(color);
+    }
+
+
+    /**
+     * 设置透明状态栏(5.0以上)
+     */
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public static void setTransparent(Window window){
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        window.getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
+                        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        window.setStatusBarColor(Color.TRANSPARENT);
     }
 
     /**
@@ -288,52 +262,61 @@ public class StatusBarUtils {
      */
     public static void setPadding(Context context, View view) {
         if (Build.VERSION.SDK_INT >= MIN_API) {
-            view.setPadding(view.getPaddingLeft(), view.getPaddingTop() + getStatusBarHeight(context),
-                    view.getPaddingRight(), view.getPaddingBottom());
+            view.setPadding(
+                    view.getPaddingLeft(),
+                    view.getPaddingTop() + getStatusBarHeight(context),
+                    view.getPaddingRight(),
+                    view.getPaddingBottom());
         }
     }
     /**
-     *  增加View的paddingTop,增加的值为状态栏高度 (智能判断，并设置高度)
+     *  增加View的高度和paddingTop,增加的值为状态栏高度，一般在沉浸式状态栏时给Toolbar使用
      */
-    public static void setPaddingSmart(Context context, View view) {
+    public static void setPaddingAndHeight(Context context, View view) {
         if (Build.VERSION.SDK_INT >= MIN_API) {
             ViewGroup.LayoutParams lp = view.getLayoutParams();
             if (lp != null && lp.height > 0) {
-                lp.height += getStatusBarHeight(context);//增高
+                lp.height += getStatusBarHeight(context);
             }
-            view.setPadding(view.getPaddingLeft(), view.getPaddingTop() + getStatusBarHeight(context),
-                    view.getPaddingRight(), view.getPaddingBottom());
+            setPadding(context, view);
         }
     }
 
     /**
-     * 增加View的高度以及paddingTop,增加的值为状态栏高度.一般是在沉浸式全屏给ToolBar用的
-     */
-    public static void setHeightAndPadding(Context context, View view) {
-        if (Build.VERSION.SDK_INT >= MIN_API) {
-            ViewGroup.LayoutParams lp = view.getLayoutParams();
-            lp.height += getStatusBarHeight(context);//增高
-            view.setPadding(view.getPaddingLeft(), view.getPaddingTop() + getStatusBarHeight(context),
-                    view.getPaddingRight(), view.getPaddingBottom());
-        }
-    }
-    /**
-     * 增加View上边距（MarginTop）一般是给高度为 WARP_CONTENT 的小控件用的
+     * 增加View的marginTop，一般是给高度为 WARP_CONTENT 的小控件使用
      */
     public static void setMargin(Context context, View view) {
         if (Build.VERSION.SDK_INT >= MIN_API) {
             ViewGroup.LayoutParams lp = view.getLayoutParams();
             if (lp instanceof ViewGroup.MarginLayoutParams) {
-                ((ViewGroup.MarginLayoutParams) lp).topMargin += getStatusBarHeight(context);//增高
+                ((ViewGroup.MarginLayoutParams) lp).topMargin += getStatusBarHeight(context);
             }
             view.setLayoutParams(lp);
         }
     }
 
     /**
+     * 创建假的透明栏(解决5.0以下不能设置直接设置状态栏颜色的问题)
+     */
+    private static void setTranslucentView(ViewGroup container, int color) {
+        View translucentView = container.findViewById(android.R.id.custom);
+        if (translucentView == null) {
+            translucentView = new View(container.getContext());
+            translucentView.setId(android.R.id.custom);
+            ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, getStatusBarHeight(container.getContext()));
+            container.addView(translucentView, lp);
+        }
+        translucentView.setBackgroundColor(color);
+        if(translucentView.getVisibility() == View.GONE){
+            translucentView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    /**
      * 获取状态栏高度
      */
-    public static int getStatusBarHeight(Context context) {
+    private static int getStatusBarHeight(Context context) {
         int result = 24;
         int resId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
         if (resId > 0) {
@@ -345,10 +328,30 @@ public class StatusBarUtils {
         return result;
     }
 
+    /**
+     * 判断是否Flyme4以上
+     */
+    private static boolean isFlyme4Later() {
+        return Build.FINGERPRINT.contains("Flyme_OS_4")
+                || Build.VERSION.INCREMENTAL.contains("Flyme_OS_4")
+                || Pattern.compile("Flyme OS [4|5]", Pattern.CASE_INSENSITIVE).matcher(Build.DISPLAY).find();
+    }
 
-    private static int mixtureColor(int color, @FloatRange(from = 0.0, to = 1.0) float alpha) {
-        int a = (color & 0xff000000) == 0 ? 0xff : color >>> 24;
-        return (color & 0x00ffffff) | (((int) (a * alpha)) << 24);
+    /**
+     * 判断是否为MIUI6以上
+     */
+    private static boolean isMIUI6Later() {
+        try {
+            @SuppressLint("PrivateApi")
+            Class<?> clz = Class.forName("android.os.SystemProperties");
+            Method mtd = clz.getMethod("get", String.class);
+            String val = (String) mtd.invoke(null, "ro.miui.ui.version.name");
+            val = val.replaceAll("[vV]", "");
+            int version = Integer.parseInt(val);
+            return version >= 6;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
 }

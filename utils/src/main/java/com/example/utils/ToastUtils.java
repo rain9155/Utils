@@ -24,7 +24,7 @@ public class ToastUtils {
 
     /**
      * Toast提示
-     * @param context
+     * @param context 注意，要传进Application的Context，否则会内存泄漏
      * @param message 的内容
      */
     public static void showToast(Context context, String message){
@@ -62,32 +62,4 @@ public class ToastUtils {
         toastInCenter(context, message,  LayoutInflater.from(context).inflate(resouceId, null));
     }
 
-    /**
-     * 下弹式提示框
-     * @param viewGroup 父布局
-     * @param s  要提示的内容
-     */
-    public static void toastMake(Context context, final ViewGroup viewGroup, String s, int backgroundColor, int textColor){
-        final TextView textView = new TextView(context);
-        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        textView.setText(s);
-        textView.setGravity(Gravity.CENTER);
-        textView.setPadding(0, 15, 0, 15);
-        textView.setTextColor(textColor);
-        textView.setBackgroundColor(backgroundColor);
-        textView.setLayoutParams(params);
-        viewGroup.addView(textView);
-        AnimatorSet animatorSet = new AnimatorSet();
-        ObjectAnimator translationY1 = ObjectAnimator.ofFloat(textView, "translationY",  -65f, 0f);
-        ObjectAnimator translationY2 = ObjectAnimator.ofFloat(textView, "translationY", 0f, -65);
-        translationY2.setStartDelay(2500);
-        animatorSet.playSequentially(translationY1, translationY2);
-        animatorSet.start();
-        animatorSet.addListener(new AnimatorListener(){
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                viewGroup.removeView(textView);
-            }
-        });
-    }
 }

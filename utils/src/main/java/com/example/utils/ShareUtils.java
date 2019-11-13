@@ -17,62 +17,59 @@ public class ShareUtils {
 
     /**
      * 分享文字
+     * @return true表示可以找到相应的应用打开，false表示无法找到相应的应用打开
      */
-    public static void shareText(Context context, String text, String title){
+    public static boolean shareText(Context context, String text, String title){
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_TEXT, text);
         if (context.getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null) {
             context.startActivity(Intent.createChooser(intent, title));
-        }else {
-            // 找不到指定的 Activity
-            ToastUtils.showToast(context, "找不到指定的应用来分享");
+            return true;
         }
+        return false;
     }
 
     /**
      * 发送邮件
      */
-    public static void sendEmail(Context context, String address, String title) {
+    public static boolean sendEmail(Context context, String address, String title) {
         Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + address));
         if(context.getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null){
             context.startActivity(Intent.createChooser(intent, title));
-        }else {
-            // 找不到指定的 Activity
-            ToastUtils.showToast(context, "找不到指定的应用来发送邮件");
+            return true;
         }
+        return false;
     }
 
     /**
      * 分享图片
      */
-    public static void sendImage(@NonNull Context context, @NonNull Uri uri, String title) {
+    public static boolean sendImage(@NonNull Context context, @NonNull Uri uri, String title) {
         Intent shareIntent = new Intent()
                 .setAction(Intent.ACTION_SEND)
                 .setType("image/*")
                 .putExtra(Intent.EXTRA_STREAM, uri);
         if(context.getPackageManager().resolveActivity(shareIntent, PackageManager.MATCH_DEFAULT_ONLY) != null){
             context.startActivity(Intent.createChooser(shareIntent, title));
-        }else {
-            // 找不到指定的 Activity
-            ToastUtils.showToast(context, "找不到指定的应用来分享");
+            return true;
         }
+        return false;
     }
 
     /**
      * 打开浏览器
      */
-    public static void openBrowser(Context context, String address){
+    public static boolean openBrowser(Context context, String address){
         if (TextUtils.isEmpty(address) || address.startsWith("file://")) {
-            ToastUtils.showToast(context, "该链接无法使用浏览器打开");
-            return;
+            return false;
         }
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(address));
         if(context.getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null){
             context.startActivity(intent);
-        }else {
-            ToastUtils.showToast(context, "找不到指定应用打开浏览器");
+            return true;
         }
+        return false;
     }
 }
