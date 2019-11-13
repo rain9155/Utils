@@ -7,7 +7,7 @@
     <application>
 
         <provider
-            android:name="androidx.core.content.FileProvider"
+            android:name="com.example.utils.provider.MyFileProvider"
             android:authorities="com.example.utils"
             android:exported="false"
             android:grantUriPermissions="true">

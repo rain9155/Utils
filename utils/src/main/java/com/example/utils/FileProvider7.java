@@ -21,13 +21,16 @@ import java.io.File;
  *           ndroid:name="android.support.FILE_PROVIDER_PATHS"
  *           android:resource="@xml/file_paths" />
  * </provider>
+ * 如果出现FileProvider冲突，参考：https://www.cnblogs.com/cuma/p/8108400.html
+ * 只需要自己重新定义一个继承自FileProvider的类，然后在注册FileProvider时，name属性填上你自定义的FileProvider的路径
  * Created by 陈健宇 at 2019/1/1
  */
 public class FileProvider7 {
 
     /**
      * 适配获得url，7.0以上获得content://, 以下获得file://
-     *
+     * @param file 文件
+     * @param authorities FileProvider的authoritie名
      */
     public static Uri getUriForFile(Context context, File file, String authorities) {
         Uri fileUri = null;
