@@ -7,11 +7,13 @@ import android.os.Build;
 
 import androidx.core.content.FileProvider;
 
+import com.example.utils.provider.MyFileProvider;
+
 import java.io.File;
 
 /**
  * 适配Android 7.0的FileProvide，文件共享
- * 需要在manifest文件中注册provider，如下：
+ * 如果需要在manifest文件中注册provider，参考如下：
  * <provider
  *      android:name="androidx.core.content.FileProvider"
  *      android:authorities="（随便填）"//这里填写provider的authoritie名
@@ -27,8 +29,23 @@ import java.io.File;
  */
 public class FileProvider7 {
 
+
     /**
-     * 适配获得url，7.0以上获得content://, 以下获得file://
+     * 适配获得url，7.0以上获得content://, 以下获得file://(使用已经注册好的FileProvider)
+     */
+    public static Uri getUriForFile(Context context, File file) {
+        return getUriForFile(context, file, MyFileProvider.AUTHORITIES);
+    }
+
+    /**
+     * 通过file获得content://(使用已经注册好的FileProvider)
+     */
+    public static Uri getUriForFile24(Context context, File file) {
+        return getUriForFile24(context, file, MyFileProvider.AUTHORITIES);
+    }
+
+    /**
+     * 适配获得url，7.0以上获得content://, 以下获得file://(需要自己注册FileProvider)
      * @param file 文件
      * @param authorities FileProvider的authoritie名
      */
@@ -43,7 +60,7 @@ public class FileProvider7 {
     }
 
     /**
-     * 通过file获得content://
+     * 通过file获得content://(需要自己注册FileProvider)
      */
     public static Uri getUriForFile24(Context context, File file, String authorities) {
         Uri fileUri = FileProvider.getUriForFile(
@@ -55,7 +72,14 @@ public class FileProvider7 {
 
 
     /**
-     * 适配apk安装的setDataAndType（）
+     * 适配apk安装的setDataAndType（）(使用已经注册好的FileProvider)
+     */
+    public static void setIntentDataAndType(Context context, Intent intent, String type, File file, boolean writeAble) {
+        setIntentDataAndType(context, intent, type, file, MyFileProvider.AUTHORITIES, writeAble);
+    }
+
+    /**
+     * 适配apk安装的setDataAndType（）(需要自己注册FileProvider)
      * @param intent 打开安装界面的intent
      * @param type  meta type
      * @param file  安装包的file

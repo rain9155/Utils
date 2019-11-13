@@ -189,6 +189,6 @@ public class IntentUtils {
 
     private static Uri getUri(Context context, String path) {
         java.io.File file = new java.io.File(path);
-        return FileProvider7.getUriForFile(context, file, "com.example.utils");
+        return FileProvider7.getUriForFile(context, file);
     }
 }
