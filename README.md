@@ -27,7 +27,7 @@
 在Module目录下的build.gradle中添加依赖, 示例如下：
 ```java
 dependencies {
-    implementation 'com.jianyu:utils:1.0.2'
+    implementation 'com.jianyu:utils:1.0.5'
 }
 
 ```
