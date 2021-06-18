@@ -3,7 +3,7 @@
 [![](license.png)](http://www.apache.org/licenses/LICENSE-2.0)
 
 ### 一个简单实用工具库，功能还在继续完善！
-### Features
+## Features
 |工具|功能|
 |--|--|
 |[ActivityCollector](utils/src/main/java/com/example/utils/ActivityCollector.java)|活动管理器,随时随地退出活动|
@@ -22,7 +22,7 @@
 |[IntentUtils](utils/src/main/java/com/example/utils/IntentUtils.java)|获取各种Intent工具类|
 |[VibrateUtils](utils/src/main/java/com/example/utils/VibrateUtils.java)|震动工具类，需添加VIBRATE权限|
 |[FileProvider7](utils/src/main/java/com/example/utils/FileProvider7.java)|适配器android7.0FileProvider的工具类|
-### How to use?
+## How to use?
 
 在Module目录下的build.gradle中添加依赖, 示例如下：
 ```java
@@ -32,7 +32,7 @@ dependencies {
 
 ```
 
-### License
+## License
 ```
  Copyright 2018 rain9155
  
